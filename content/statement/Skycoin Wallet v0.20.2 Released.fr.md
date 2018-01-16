@@ -22,4 +22,4 @@ Modifications les plus importantes:
 - Pas de problème de performance. L'interface est réactive.
 - [Distribution de pièces bloquée dans le temps](/statement/skycoin-distribution-plan/#timelocked-distribution)
 
-[Journal des modifications complet](https://github.com/skycoin/skycoin/blob/master/CHANGELOG.md#0200---2017-10-10)
+[Historique complet des modifications](https://github.com/skycoin/skycoin/blob/master/CHANGELOG.md#0200---2017-10-10)
