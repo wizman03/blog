@@ -40,7 +40,7 @@ bounty = 20
 >>>>De façon alternative, la preuve de brûlure pourrait être nécessaire, quand les pièces sont envoyées
 >>>>de l'adresse A à une adresse B qui n'a pas de clé privée. La preuve de brûlure entrant en conflit
 >>>>avec le besoin que personne ne devrait télécharger le blockchain en entier
->>>>depuis le début pour opérer un noeud complet, est donc peu probable
+>>>>depuis le début pour opérer un noeud complet, est donc peu probable.
 
 >>>> Ce système limite le nombre de nœuds Obelisk et limite la
 >>>> possibilité de faire fonctionner des nœuds Obelisk aux seuls détenteurs de pièces.
@@ -65,22 +65,22 @@ bounty = 20
 >> maintenant, mais c'est quelque chose que nous devrions garder à l'esprit.
 
 >> Lorsqu'un nouveau nœud Obelisk est lancé, il fera "confiance" à des pairs aléatoires. L'utilisateur
->> peut également ajouter quelques nœuds qu'il approuve à la main (bourses ou 
+>> peut également ajouter quelques nœuds qu'il approuve manuellement (bourses ou 
 >> membres de confiance de la communauté). Un noeud est identifié par son hash de clé publique et trouvé par
->> DHT (table de hachage distribuée). Ce n'est pas comme Bitcoin où les nœuds sont des paires IP:port.
+>> DHT (table de hachage distribuée). Ce n'est pas comme avec Bitcoin où les nœuds sont des paires IP:port.
 >> Vous pouvez déplacer votre ordinateur, l'identité du nœud ne dépend pas de son adresse IP.
 
 >> Nous voulons que le réseau soit sécurisé avec une sélection de nœuds aléatoires. Nous ne voulons pas
 >> une situation comme Ripple, où les trois nœuds des développeurs contrôlent le
 >> réseau. Cependant, nous voulions éviter une situation où quelqu'un lance
 >> 200 000 nœuds et tente de collecter les approbations auprès des nouveaux utilisateurs.
->> Ces nœuds d'attaque de type "Sybil", ne peuvent toujours pas faire une attaque des 51% en général, mais tout
+>> Ces nœuds d'attaque, de type "Sybil", ne peuvent toujours pas faire une attaque des 51% en général, mais tout
 >> ce qui augmente le coût de l'attaque est toujours utile.
->> Peut-être que nous le restreindrons afin qu'un nouvel utilisateur ne fasse confiance uniquement de manière aléatoire qu'à un noeud
+>> Peut-être que nous le restreindrons afin qu'un nouvel utilisateur ne fasse confiance uniquement, de manière aléatoire, qu'à un noeud
 >> qui possède une balance de pièces. Les relations de confiance ne seront pas rompues si le noeud n'a
 >> pas une balance de pièces, mais il ne recevra pas de nouveaux utilisateurs aléatoires.
 
->> Le graphe de connectivité pour les relations de confiance, est censé être un
+>> Le graphe de connectivité pour les relations de confiance est censé être un
 >> graphe aléatoire entièrement connecté. Quelques nœuds (membres de confiance de la communauté, bourses,
 >> sites Web, organisations) auront plus de relations de confiance et cela aide
 >> un peu le temps de convergence pour un consensus sur un bloc. Cela réduit un peu le périmètre
@@ -89,15 +89,15 @@ bounty = 20
 >> les décisions de consensus, mais sont des "oracles du consensus" pour vérifier si votre noeud a
 >> convergé avec le réseau.
 
->> Si deux grandes bourses ont un consensus différent pour un bloc particulier, ceci
->> est un problème. Cela pourrait indiquer une déconnexion du réseau ou une attaque sur le réseau.
+>> Si deux grandes bourses ont un consensus différent pour un bloc particulier, il s'agit
+>> d'un problème. Cela pourrait indiquer une déconnexion du réseau ou une attaque sur le réseau.
 >> Les bourses peuvent vouloir suspendre la négociation jusqu'à ce que le problème soit résolu.
-> Obelisk est le nœud de consensus de skycoin? Je pensais que le skycoind était
+> Obelisk est le nœud de consensus de skycoin? Je pensais que skycoind était
 > le noeud ...
 
 Oui.
 
-Skycoin a une blockchain. La blockchain est sur
+Skycoin a une blockchain. La blockchain se trouve ici:
 https://github.com/skycoin/skycoin/tree/develop/src/coin. Cela analyse les
 blocs et gère les résultats et les transactions non dépensés.
 
@@ -108,7 +108,7 @@ changer).
 
 Le mécanisme de consensus est en dehors de la blockchain. Les noeuds Obelisk (qui
 seront probablement mis en œuvre comme un service Skywire) ont une blockchain.
-Chaque noeud a une clé publique. La clé publique identifie le nœud Obelisk.
+Chaque noeud possède une clé publique et celle-ci publique identifie le nœud Obelisk.
 Chaque nœud Obelisk a sa propre blockchain (il n'y a pas de pièces dans cette chaîne).
 Le noeud crée un nouveau bloc et le signe avec sa clé privée.
 Les blockchains Obelisk sont utilisées pour négocier un consensus (déterminer le bloc de tête 
@@ -126,13 +126,13 @@ vos pairs (les nœuds auxquels vous êtes abonné) ont atteint un consensus, vou
 passez à ce candidat. Le réseau peut voter sur plusieurs branches à la fois, il
 ne ralentit pas dans l'attente d'un consensus. Les branches sont réduites à une seule
 chaîne au fil du temps. Les divisions de deux ou trois blocs sont normales, mais après quelques
-confirmations la probabilité de l'annulation du bloc diminue
+confirmations, la probabilité de l'annulation du bloc diminue
 exponentiellement vers zéro. Si une transaction a été exécutée sur toutes les
-chaînes candidates, alors elle est exécuté, même si le consensus sur la chaîne particulière
+chaînes candidates, alors elle est exécutée, même si le consensus sur la chaîne particulière
 n'a pas encore été décidé.
 C'est ainsi que le binaire Ben-Or et Skycoin vont utiliser quelque chose de légèrement plus avancé,
-qui est plus rapide quand il y a plusieurs blocs qui se succèdent à choisir dans
-l'ensemble de consensus. Le choix aléatoire est important pour empêcher les sous-graphes du réseau
+qui est plus rapide  à choisir dans l'ensemble de consensus quand il y a
+plusieurs blocs qui se succèdent. Le choix aléatoire est important pour empêcher les sous-graphes du réseau
 de rester bloqués. Le processus de vote est une forme de "cuisson" où chaque
 noeud arrivera au consensus global indépendamment, seulement à partir de ses informations locales.
 
@@ -142,19 +142,18 @@ abonnés de la chaîne. Puis, il y a des "oracles du consensus" qui sont des nœ
 qui sont utilisés pour vérifier le consensus mais qui n'influencent pas le consensus. Donc vous pourriez
 choisir les clés publiques de quelques bourses et quelques membres de confiance de la communauté
 et votre noeud les utilisera pour détecter si quelque chose ne va pas. Ceci est utilisé pour
-détecter les déconnexions. Cela protège également contre une attaque, où un pirate
+détecter les déconnexions. Cela protège également contre une attaque où un pirate
 contrôle votre routeur et peut contrôler les pairs auxquels vous pouvez vous connecter.
 
 Si un nœud s'affiche sur le réseau et tente de pousser le réseau à accepter une
 chaîne différente (attaque des 51%, annulation des transactions), il est généralement ignoré.
-La plupart des attaques des 51% nécessitent un comportement malicieux du nœud qui est automatiquement
-détecté et résulte à la suppression du noeud malicieux par un noeud abonné de
-sa liste de confiance. La stratégie d'attaque des 51% la plus facile, qui 
-tente d'annuler des transactions,est simple à détecter et à prouver
-avec une certitude mathématique qu'elle était prévu comme une tentative d'annuler des
+La plupart des attaques des 51% nécessitent un comportement malicieux du nœud, qui est automatiquement
+détecté et résulte à la suppression de ce noeud malicieux par un noeud abonné de
+sa liste de confiance. La stratégie d'attaque des 51% la plus facile est simple à détecter et à prouver
+avec une certitude mathématique comme étant une tentative d'annuler des
 transactions, car elle nécessite des décisions consensuelles de blocage de bloc.
 Elle nécessite la publication de deux blocs signés avec le même numéro de séquence,
-nous en avons juste fait une infraction automatiquement bannisable pour un noeud.
+et nous en avons fait une infraction automatiquement bannisable pour un noeud.
 
 Nous essayons d'éliminer la dernière attaque des 51% possible, lorsqu'un
 sous-réseau de noeuds se déconnecte (attaque de déconnexion), puis rejoint le
@@ -164,11 +163,11 @@ sous-réseau n'aura pas assez d'influence.
 
 Cette attaque est toujours très difficile à réaliser. Dans le cas où 
 une attaque des 51% succède, une solution consiste à geler le réseau et laisser chaque nœud / utilisateur
-choisir individuellement la chaîne qui est valide et laisser les gens interdire les noeuds 
+choisir individuellement la chaîne qui est valide, et laisser les gens interdire les noeuds 
 attaquant manuellement. L'oracle de consensus permet à chaque nœud de
 savoir, avec une forte probabilité, si l'état est synchronisé et si un consensus global a été atteint ou
 s'ils font partie d'un sous-graphe déconnecté. Nous pensons qu'il est possible pour chaque noeud de
-savoir avec une forte probabilité d'exactitude à partir des informations locales, si un
+savoir avec une forte probabilité d'exactitude, à partir des informations locales, si un
 nœud était hors ligne lors d'une décision de consensus, puis d'ignorer les nœuds
 qui étaient déconnectés qui apparaissent soudainement et qui tentent de forcer une chaîne sur le réseau.
 
@@ -176,22 +175,24 @@ Avec Bitcoin, si vous avez le plus de pouvoir de hachage, vous pouvez annuler le
 
 Avec Skycoin, pour inverser les transactions:
 
-- Vous devez controller un grand nombre de nœuds
-- Les nœuds que vous contrôlez doivent être "influants" et fiables dans la topologie du réseau
+- Vous devez controller un grand nombre de nœuds.
+- Les nœuds que vous contrôlez doivent être "influants" et fiables dans la topologie du réseau.
 - Vos noeuds doivent présenter un comportement d'attaque pathologique extrêmement flagrant
   sans que le comportement ne soit détecté, car la détection entraînerait la perte
   des relations de confiance dont vous avez besoin pour attaquer le réseau.
 - Vos nœuds doivent être dans une topologie d'attaque pathologique, sans être
-  détecté (la plupart des noeuds robots auront la confiance de très peu d'humains et seront très évidents)
+  détecté (la plupart des noeuds robots auront la confiance de très peu d'humains et seront très évidents).
 - Vous devez être en mesure de faire en sorte que les nœuds que vous contrôlez parviennent à s'entendre de manière à aboutir
-  dans une attaque réussie (ce n'est pas très simple)
-- Si l'attaque réussit, vous devez empêcher le réseau d'annuler l'attaque manuellement (très difficile si les gens ont perdu des pièces ou de l'argent en raison de l'attaque)
+  en une attaque réussie (ce n'est pas simple).
+- Si l'attaque réussit, vous devez empêcher le réseau d'annuler l'attaque manuellement (très difficile si les gens ont perdu des pièces ou de l'argent en raison de l'attaque).
 
-Pour prouver qu'il est résistant à l'attaque des 51%, vous devez écrire les hypothèses que vous formulez, puis créer un modèle mathématique simple et ensuite prouver les
+Pour prouver qu'il est résistant à l'attaque des 51%, vous devez écrire les hypothèses que
+vous formulez, puis créer un modèle mathématique simple et ensuite prouver les
 conditions dans lesquelles les choses peuvent et ne peuvent pas arriver dans le modèle. Une fois que vous
-connaissez les conditions dans lesquelles une attaque est possible, vous essayez de les éliminer et si vous ne pouvez pas les éliminer, vous les rendez aussi difficile que possible.
+connaissez les conditions dans lesquelles une attaque est possible, vous essayez de les éliminer,
+et si vous ne pouvez pas les éliminer, vous les rendez aussi difficile que possible.
 Vous augmentez le coût d'une attaque et vous réduisez la probabilité qu'une
-attaque spécifique réussira. Ensuite, vous réduisez les gains et l'incitation à attaquer.
+attaque spécifique réussira. Puis, vous réduisez les gains et l'incitation à attaquer.
 
 Le processus de consensus est simple et facile à modéliser, mais non intuitif sans
 le voir. Il y aura dans la finalité un site javascript avec une animation du
