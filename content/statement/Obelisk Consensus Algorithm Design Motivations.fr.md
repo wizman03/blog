@@ -1,5 +1,5 @@
 +++
-title = "Les motivations de la comception de l'algorithme de consensus Obelisk"
+title = "Les motivations de la conception de l'algorithme de consensus Obelisk"
 tags = [
     "Obelisk",
     "Consensus",
@@ -27,12 +27,12 @@ bounty = 20
 >>>>Nous avons trouvé un moyen d'empêcher l'attaque dite "Sybil" en utilisant un système hybride
 >>>>de preuve d'enjeu (Proof of Stake).
 
->>>>Pour créer un noeud, il vous faut prouver que vous possèdez des pièces. Disons 10 pièces. Vous envoyez 10
->>>>pièces à l'adresse A. Puis vous envoyez 10 pièces de l'adresse A vers l'adresse B.
->>>>Puis vous ajoutez une signature en utilisant la clé public de l'adresse A pour signer le message
+>>>>Pour créer un noeud, il vous faut prouver que vous possédez des pièces. Disons 10 pièces. Vous envoyez 10
+>>>>pièces à l'adresse A. Ensuite vous envoyez 10 pièces de l'adresse A vers l'adresse B.
+>>>>Finalement vous ajoutez une signature en utilisant la clé public de l'adresse A pour signer le message
 >>>>dans votre blockchain Obelisk.
 
->>>>D'une autre façon, vous pourriez publiez la clé publique de l'adresse A puis
+>>>>Vous pourriez aussi publier la clé publique de l'adresse A puis
 >>>>signer un message avec cette clé public. Le noeud aurait besoin de publier une
 >>>>signature à un certain interval de temps, ou à un certain nombre de blocs de la réserve de
 >>>>pièces en train d'être déplacées, dans le but de maintenir une relation de confiance valide avec les autres.
@@ -92,8 +92,7 @@ bounty = 20
 >> Si deux grandes bourses ont un consensus différent pour un bloc particulier, ceci
 >> est un problème. Cela pourrait indiquer une déconnexion du réseau ou une attaque sur le réseau.
 >> Les bourses peuvent vouloir suspendre la négociation jusqu'à ce que le problème soit résolu.
-
-> Obelisk est le nœud de consensus de skycoin? Je pensais que le skycoind était le
+> Obelisk est le nœud de consensus de skycoin? Je pensais que le skycoind était
 > le noeud ...
 
 Oui.
@@ -104,7 +103,7 @@ blocs et gère les résultats et les transactions non dépensés.
 
 Skywire est le daemon et a une "architecture de service". Il peut exécuter des services,
 comme le service de synchronisation de la blockchain et d'autres choses. Le meshnet est actuellement
-mis en œuvre comme un service sur Skywire (même si cela peut avoir besoin de
+mis en œuvre comme un service sur Skywire (même si cela pourrait
 changer).
 
 Le mécanisme de consensus est en dehors de la blockchain. Les noeuds Obelisk (qui
@@ -122,18 +121,18 @@ vers un consensus global.
 Chaque noeud vote sur le bloc suivant de la chaîne. Un noeud propose le prochain
 bloc et les nœuds votent sur le successeur. Les votes sont publiés dans les
 blocs dans la blockchain Obelisk pour chaque nœud. Votre noeud vote au hasard
-entre temps et retourne son vote de temps en temps. Une fois 40% de
+entre temps et change son vote de temps en temps. Une fois 40% de
 vos pairs (les nœuds auxquels vous êtes abonné) ont atteint un consensus, vous
-passer à ce candidat. Le réseau peut voter sur plusieurs branches à la fois, il
-ne ralentit pas dans l'attente d'un consensus. Les branches sont réduits à une seul
+passez à ce candidat. Le réseau peut voter sur plusieurs branches à la fois, il
+ne ralentit pas dans l'attente d'un consensus. Les branches sont réduites à une seule
 chaîne au fil du temps. Les divisions de deux ou trois blocs sont normales, mais après quelques
 confirmations la probabilité de l'annulation du bloc diminue
 exponentiellement vers zéro. Si une transaction a été exécutée sur toutes les
 chaînes candidates, alors elle est exécuté, même si le consensus sur la chaîne particulière
 n'a pas encore été décidé.
-C'est ainsi que le binaire Ben-Or et Skycoin va utiliser quelque chose de légèrement plus avancé,
-qui est plus rapide quand il y a plusieurs blocs successeurs à choisir dans le
-set de consensus. Le choix aléatoire est important pour empêcher les sous-graphiques du réseau
+C'est ainsi que le binaire Ben-Or et Skycoin vont utiliser quelque chose de légèrement plus avancé,
+qui est plus rapide quand il y a plusieurs blocs qui se succèdent à choisir dans
+l'ensemble de consensus. Le choix aléatoire est important pour empêcher les sous-graphes du réseau
 de rester bloqués. Le processus de vote est une forme de "cuisson" où chaque
 noeud arrivera au consensus global indépendamment, seulement à partir de ses informations locales.
 
@@ -147,36 +146,38 @@ détecter les déconnexions. Cela protège également contre une attaque, où un
 contrôle votre routeur et peut contrôler les pairs auxquels vous pouvez vous connecter.
 
 Si un nœud s'affiche sur le réseau et tente de pousser le réseau à accepter une
-chaîne différente (attaque des 51%, annulation des transactions), il est généralement ignorée.
+chaîne différente (attaque des 51%, annulation des transactions), il est généralement ignoré.
 La plupart des attaques des 51% nécessitent un comportement malicieux du nœud qui est automatiquement
 détecté et résulte à la suppression du noeud malicieux par un noeud abonné de
-sa liste de confiance. La stratégie d'attaque des 51% la plus facile est simple à détecter et à prouver
+sa liste de confiance. La stratégie d'attaque des 51% la plus facile, qui 
+tente d'annuler des transactions,est simple à détecter et à prouver
 avec une certitude mathématique qu'elle était prévu comme une tentative d'annuler des
 transactions, car elle nécessite des décisions consensuelles de blocage de bloc.
-Il nécessite la publication de deux blocs signés avec le même numéro de séquence,
-donc nous en avons juste fait une infraction automatiquement bannisable pour un noeud.
+Elle nécessite la publication de deux blocs signés avec le même numéro de séquence,
+nous en avons juste fait une infraction automatiquement bannisable pour un noeud.
 
-Nous essayons d'éliminer la dernière attaque des 51% possible, qui est lorsquun
+Nous essayons d'éliminer la dernière attaque des 51% possible, lorsqu'un
 sous-réseau de noeuds se déconnecte (attaque de déconnexion), puis rejoint le
-réseau avec un consensus de blockchain différent et tente de forcer cela sur le
+réseau avec un consensus de blockchain différent et tente de le forcer sur le
 réseau pour annuler les transactions. La plupart de ces attaques échoueront, car le
 sous-réseau n'aura pas assez d'influence.
 
-Cette attaque est toujours très difficile à enlever. Dans le cas où il y a
-une attaque des 51% réussie, une solution consiste à geler le réseau et laisser chaque nœud / utilisateur
-choisir individuellement la chaîne qui est valide et laisser les gens interdire noeuds attaquant manuellement. L'oracle de consensus permet à chaque nœud de
-savoir, avec une forte probabilité, si l'état est synchronisé et si un consensus global a été atteint ou si
-ils font partie d'un sous-graphique déconnecté. Nous pensons qu'il est possible pour chaque noeud de
+Cette attaque est toujours très difficile à réaliser. Dans le cas où 
+une attaque des 51% succède, une solution consiste à geler le réseau et laisser chaque nœud / utilisateur
+choisir individuellement la chaîne qui est valide et laisser les gens interdire les noeuds 
+attaquant manuellement. L'oracle de consensus permet à chaque nœud de
+savoir, avec une forte probabilité, si l'état est synchronisé et si un consensus global a été atteint ou
+s'ils font partie d'un sous-graphe déconnecté. Nous pensons qu'il est possible pour chaque noeud de
 savoir avec une forte probabilité d'exactitude à partir des informations locales, si un
 nœud était hors ligne lors d'une décision de consensus, puis d'ignorer les nœuds
-qui étaient déconnectés qui apparaissent soudainement et tentent de forcer une chaîne sur le réseau.
+qui étaient déconnectés qui apparaissent soudainement et qui tentent de forcer une chaîne sur le réseau.
 
-Dans Bitcoin, si vous avez le plus de pouvoir de hachage, vous pouvez annuler les transactions quand vous le souhaitez.
+Avec Bitcoin, si vous avez le plus de pouvoir de hachage, vous pouvez annuler les transactions quand vous le souhaitez.
 
-Dans Skycoin, pour inverser les transactions:
+Avec Skycoin, pour inverser les transactions:
 
 - Vous devez controller un grand nombre de nœuds
-- Les nœuds que vous contrôlez doivent être "influents" et fiables dans la topologie du réseau
+- Les nœuds que vous contrôlez doivent être "influants" et fiables dans la topologie du réseau
 - Vos noeuds doivent présenter un comportement d'attaque pathologique extrêmement flagrant
   sans que le comportement ne soit détecté, car la détection entraînerait la perte
   des relations de confiance dont vous avez besoin pour attaquer le réseau.
@@ -186,12 +187,11 @@ Dans Skycoin, pour inverser les transactions:
   dans une attaque réussie (ce n'est pas très simple)
 - Si l'attaque réussit, vous devez empêcher le réseau d'annuler l'attaque manuellement (très difficile si les gens ont perdu des pièces ou de l'argent en raison de l'attaque)
 
-Pour prouver qu'il est n'est résistant à l'attaque des 51%, vous devez écrire les hypothèses que vous formulez, puis créer un modèle mathématique simple et ensuite prouver les
+Pour prouver qu'il est résistant à l'attaque des 51%, vous devez écrire les hypothèses que vous formulez, puis créer un modèle mathématique simple et ensuite prouver les
 conditions dans lesquelles les choses peuvent et ne peuvent pas arriver dans le modèle. Une fois que vous
 connaissez les conditions dans lesquelles une attaque est possible, vous essayez de les éliminer et si vous ne pouvez pas les éliminer, vous les rendez aussi difficile que possible.
-Vous augmentez le coût d'une attaque et vous réduisez la probabilité qu'un
-attaque spécifique réussira. Ensuite, vous réduisez les gains et les incitations pour
-l'attaque.
+Vous augmentez le coût d'une attaque et vous réduisez la probabilité qu'une
+attaque spécifique réussira. Ensuite, vous réduisez les gains et l'incitation à attaquer.
 
 Le processus de consensus est simple et facile à modéliser, mais non intuitif sans
 le voir. Il y aura dans la finalité un site javascript avec une animation du
